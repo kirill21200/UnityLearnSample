@@ -13,7 +13,7 @@ public class DestroyModule : MonoBehaviour
 
     private Transform myTransform;
 
-    private void Awake()
+    private void Avake()
     {
         myTransform = transform;
     }

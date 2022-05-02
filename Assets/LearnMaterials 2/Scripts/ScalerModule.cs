@@ -21,7 +21,7 @@ public class ScalerModule : MonoBehaviour
         defaultScale = myTransform.localScale;
         toDefault = false;
     }
-    [ContextMenu("Размер")]
+    [ContextMenu("Изменить размер")]
     public void ActivateModule()
     {
         Vector3 target = toDefault ? defaultScale : targetScale;
