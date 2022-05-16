@@ -58,8 +58,11 @@ public class InteractiveRaycast : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit))
             {
+                Debug.Log(hit);
                 if (hit.collider.gameObject.GetComponent<InteractiveBox>())
                 {
+                    Debug.Log(hit);
+
                     Destroy(hit.collider.gameObject);
                 }
             }
