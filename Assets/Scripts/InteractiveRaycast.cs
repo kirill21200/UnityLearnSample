@@ -8,37 +8,62 @@ public class InteractiveRaycast : MonoBehaviour
     private GameObject box;
     private GameObject next;
 
+
     [SerializeField]
     private GameObject prefab;
 
+    private Vector3 scale;
+
     private Camera cam;
-    void Start()
+
+    private void Start()
     {
         cam = GetComponent<Camera>();
     }
 
-    void Update()
+
+
+    private void Update()
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit))
+        if (Input.GetMouseButtonDown(0))
         {
-            if(hit.collider.gameObject.CompareTag("InteractivePlane"))
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit))
             {
-                Vector3 pos = hit.collider.gameObject.transform.position;
-                Instantiate(prefab, new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y + prefab.transform.localScale.y / 2, hit.collider.gameObject.transform.position.z), Quaternion.identity);
-            }
-            if(hit.collider.gameObject.GetComponent<InteractiveBox>())
-            {
-                if(box == null)
+                if (hit.collider.gameObject.CompareTag("InteractivePlane"))
                 {
-                    box = hit.collider.gameObject;
+                    Vector3 pos = hit.collider.gameObject.transform.position;
+                    Instantiate(prefab, new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y + prefab.transform.localScale.y / 2, hit.collider.gameObject.transform.position.z), Quaternion.identity);
+
                 }
-                else
+                if (hit.collider.gameObject.GetComponent<InteractiveBox>())
                 {
-                    next = hit.collider.gameObject;
-                    box.GetComponent<InteractiveBox>()
+                    Debug.Log(hit.collider.gameObject.name);
+                    if (box == null)
+                    {
+                        box = hit.collider.gameObject;
+                    }
+                    else
+                    {
+                        next = hit.collider.gameObject;
+                        box.GetComponent<InteractiveBox>().AddNext(next.GetComponent<InteractiveBox>());
+                        box = null;
+                        next = null;
+                    }
                 }
             }
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit))
+            {
+                if (hit.collider.gameObject.GetComponent<InteractiveBox>())
+                {
+                    Destroy(hit.collider.gameObject);
+                }
+            }
+        }
+
     }
 }

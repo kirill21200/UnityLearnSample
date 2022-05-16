@@ -14,7 +14,7 @@ public class InteractiveBox : MonoBehaviour
     }
 
     [ContextMenu("Добавить следующий")]
-    private void AddNext(InteractiveBox box)
+    public void AddNext(InteractiveBox box)
     {
         next = box;
     }
