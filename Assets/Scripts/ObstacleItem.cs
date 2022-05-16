@@ -6,8 +6,6 @@ public class ObstacleItem : MonoBehaviour
     [SerializeField]
     private float currentValue = 1;
     private Renderer rend;
-    private float v = 0.1f;
-    private Color subColor = new Color(0, 0.1f, 0.1f);
     [SerializeField]
     private UnityEvent onDestroyObstacle;
     [SerializeField]
@@ -15,32 +13,28 @@ public class ObstacleItem : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(gameObject.name);
         rend = GetComponent<Renderer>();
         color = rend.material.color;
-        Debug.Log(gameObject.name);
-
         onDestroyObstacle.AddListener(() => Destroy(gameObject));
-
     }
 
     [ContextMenu("Нанести урон")]
-    private void GetDamage()
+    public void GetDamage(float value)
     {
-        changeColor();
+        changeColor(value);
 
-        currentValue -= v;
+        currentValue -= value;
 
         if (currentValue <= 0)
         {
-            onDestroyObstacle.Invoke();
+            onDestroyObstacle?.Invoke();
         }
 
     }
 
-    private void changeColor()
+    private void changeColor(float t)
     {
-        color -= subColor;
+        color = Color.Lerp(color, Color.red, t);
         rend.material.color = color;
     }
 }

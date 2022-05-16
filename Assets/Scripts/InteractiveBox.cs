@@ -1,18 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InteractiveBox : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private LayerMask obstacleitemsLayerMask;
+    [SerializeField]
+    private InteractiveBox next;
+    private Transform myTransform;
+
     void Start()
     {
-        
+        myTransform = transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    [ContextMenu("Добавить следующий")]
+    private void AddNext(InteractiveBox box)
     {
-        
+        next = box;
+    }
+
+    void FixedUpdate()
+    {
+        if (next)
+        {
+            Debug.DrawLine(myTransform.position, next.transform.position, Color.blue);
+
+            if (Physics.Linecast(myTransform.position, next.transform.position, out RaycastHit hit, obstacleitemsLayerMask))
+            {
+                if (hit.collider.gameObject.GetComponent<ObstacleItem>())
+                {
+                    hit.collider.gameObject.GetComponent<ObstacleItem>().GetDamage(Time.deltaTime);
+                }
+            }
+        }
     }
 }
