@@ -7,7 +7,7 @@ public class ObstacleItem : MonoBehaviour
     private float currentValue = 1;
     private Renderer rend;
     [SerializeField]
-    private UnityEvent onDestroyObstacle;
+    public UnityEvent onDestroyObstacle;
     [SerializeField]
     public Color color;
 

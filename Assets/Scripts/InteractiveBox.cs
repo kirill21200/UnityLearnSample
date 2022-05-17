@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InteractiveBox : MonoBehaviour
 {
@@ -33,10 +34,16 @@ public class InteractiveBox : MonoBehaviour
 
                 if (hit.collider.gameObject.GetComponent<ObstacleItem>())
                 {
+                    hit.collider.gameObject.GetComponent<ObstacleItem>().onDestroyObstacle.AddListener(() => Activate());
                     hit.collider.gameObject.GetComponent<ObstacleItem>().GetDamage(Time.deltaTime);
                 }
             }
         }
+    }
+
+    private void Activate()
+    {
+        myTransform.localScale = new Vector3(1, 2, 1);
     }
 
     void DrawLine(RaycastHit hit)
