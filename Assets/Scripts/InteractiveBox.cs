@@ -25,8 +25,10 @@ public class InteractiveBox : MonoBehaviour
         {
             Debug.DrawLine(myTransform.position, next.transform.position, Color.blue);
 
-            if (Physics.Linecast(myTransform.position, next.transform.position, out RaycastHit hit, obstacleitemsLayerMask))
+            if (Physics.Raycast(myTransform.position, next.transform.position, out RaycastHit hit, obstacleitemsLayerMask))
             {
+                Debug.Log(hit.collider.gameObject.name);
+
                 if (hit.collider.gameObject.GetComponent<ObstacleItem>())
                 {
                     hit.collider.gameObject.GetComponent<ObstacleItem>().GetDamage(Time.deltaTime);

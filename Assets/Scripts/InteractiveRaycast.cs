@@ -5,7 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class InteractiveRaycast : MonoBehaviour
 {
+    [SerializeField]
     private GameObject box;
+    [SerializeField]
     private GameObject next;
 
 
@@ -34,11 +36,11 @@ public class InteractiveRaycast : MonoBehaviour
                 {
                     Vector3 pos = hit.collider.gameObject.transform.position;
                     Instantiate(prefab, new Vector3(hit.collider.gameObject.transform.position.x, hit.collider.gameObject.transform.position.y + prefab.transform.localScale.y / 2, hit.collider.gameObject.transform.position.z), Quaternion.identity);
+                    //Instantiate(prefab, new Vector3(hit.normal.x, hit.normal.y, hit.normal.z), Quaternion.identity);
 
                 }
                 if (hit.collider.gameObject.GetComponent<InteractiveBox>())
                 {
-                    Debug.Log(hit.collider.gameObject.name);
                     if (box == null)
                     {
                         box = hit.collider.gameObject;
@@ -58,11 +60,8 @@ public class InteractiveRaycast : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit))
             {
-                Debug.Log(hit);
                 if (hit.collider.gameObject.GetComponent<InteractiveBox>())
                 {
-                    Debug.Log(hit);
-
                     Destroy(hit.collider.gameObject);
                 }
             }
